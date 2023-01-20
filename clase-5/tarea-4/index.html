@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C5 - Tarea 4 - Procesar lista de numeros</title>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <h1>Procesadora de listas</h1>
+</head>
+<body>
+    <form>
+        <div id="formularios">
+            <p></p>
+            <input type="number" placeholder="0" id="form-1"/>
+        </div>
+        <p></p>
+        <div id="botones">
+            <input type="button" value="Añadir número" id="boton-anadir-numero"/>
+            <input type="button" value="Calcular" id="boton-calcular"/>
+            <input type="button" value="Reinicio" id="boton-reiniciar"/>
+        </div>
+        <p></p>
+    </form>
+
+    <label id="label-lista" class='no-visible'>Lista de numeros:<ol id="lista-numeros" class='no-visible'>
+    
+    </ol>
+    </label>
+    <div id="resultados" class="no-visible">
+        <p>Resultados:</p>
+        <p>El promedio es: <em id="promedio"></em>.</p>
+        <p>El número más grande es: <em id="mayor"></em>.</p>
+        <p>El número más pequeño es: <em id="menor"></em>.</p>
+        <p>El numero más frecuente es: <em id="repetido"></em>.</p>
+    </div>
+    <script src='tarea-lista-numeros.js'></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>C5 - Tarea 2 - Saludar Usuario</title>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <h1 id = "cabecera">Hola, bienvenido/a!</h1>
+</head>
+
+<body>
+
+    <form id="entrada-bar" onsubmit="return false;">
+        <label>Tu nombre/s:<input type="text" placeholder="" id="nombre-usuario"/></label>
+        <label>Tu apellido:<input type="text" placeholder="" id="apellido-usuario"/></label>
+        <label>Tu edad:<input type="number" placeholder="" id="edad-usuario"/></label>
+        <input type="button" value="Ingresar" id="ingresar"/>
+    </form>
+    
+    <div>
+        <p id="parrafo-saludo"></p>
+    </div>
+    <script src = "tarea-saludo-usuario.js"></script>
+</body>
+
+
+</html>
