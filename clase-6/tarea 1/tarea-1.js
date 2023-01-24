@@ -9,72 +9,117 @@ let $botonIngresar = document.querySelector("#boton-ingresar");
 let $botonCalcular = document.querySelector("#boton-calcular");
 let $botonReiniciar = document.querySelector("#boton-reiniciar");
 let $numeroDeFamiliares = document.querySelector("#numero-de-familiares");
-let $divisionFormulario = document.querySelector("#division-formulario");
+let $formularioGeneral = document.querySelector("#division-formulario");
 let $resultado = document.querySelector("#resultado");
+
+function calcularMenor(numeros){
+
+    let menor = numeros[0];
+
+    for(let i=1; i < numeros.length; i++){
+        
+        if(numeros[i] < menor){
+
+            menor = numeros[i];
+
+        }
+    }
+
+    return menor;
+}
+
+function calcularMayor(numeros){
+
+    let mayor = numeros[0];
+
+    for(let i=1; i < numeros.length; i++){
+        
+        if(numeros[i] > mayor){
+
+            mayor = numeros[i];
+
+        }
+    }
+
+    return mayor;
+
+}
+
+function calcularPromedio(numeros){
+    
+    let sumatoria = 0;
+    let promedio = 0;
+
+    for (let i=0; i<numeros.length; i++){
+
+        sumatoria += numeros[i];
+
+    }
+
+    promedio = (sumatoria / numeros.length);
+
+    return promedio;
+
+}
 
 $botonIngresar.onclick = function () {
 
     let numeroDeFamiliares = Number($numeroDeFamiliares.value);
-    for (i = 0; i < numeroDeFamiliares; i++) {
+
+    for (let i = 0; i < numeroDeFamiliares; i++) {
+
         let $nuevoForm = document.createElement("form");
         let $nuevoLabel = document.createElement("label");
         let $nuevoInput = document.createElement("input");
 
         $nuevoLabel.innerText = `Edad familiar ${i + 1}:`;
-        $nuevoLabel.id = `label-${i + 1}`;
-        $nuevoInput.id = `edad-${i + 1}`;
+        $nuevoForm.className = `formulario-dinamico`;
+
         $nuevoInput.type = `number`;
-        $nuevoForm.id = `form-${i + 1}`;
+        $nuevoInput.className = `edad`;
+
 
         $nuevoForm.appendChild($nuevoLabel);
         $nuevoForm.appendChild($nuevoInput);
-        $divisionFormulario.appendChild($nuevoForm);
+        $formularioGeneral.appendChild($nuevoForm);
 
         $botonIngresar.disabled = true;
         $botonCalcular.disabled = false;
+
     }
+
 }
 
 $botonCalcular.onclick = function () {
-    i = 0;
-    let edadMayor = 0;
-    let edadMenor = 0;
-    let promedio;
-    let sumatoria = 0;
-    let banderaPrimerNumero = true;
+    
+    let edades = [0];
+    let $listaDeNodosInput = document.querySelectorAll(".edad");
+    edades.length = $listaDeNodosInput.length;
 
-    while (document.getElementById(`edad-${i + 1}`) !== null) {
-        let edadAComparar = Number(document.getElementById(`edad-${i + 1}`).value);
+    for (i = 0; i < $listaDeNodosInput.length; i++) {
 
-        if (edadAComparar > edadMayor) {
-            edadMayor = edadAComparar;
-        }
+        edades[i] = Number($listaDeNodosInput[i].value);
 
-        if (banderaPrimerNumero) {
-            edadMenor = edadAComparar;
-            banderaPrimerNumero = false;
-        } else if (edadAComparar < edadMenor) {
-            edadMenor = edadAComparar;
-        }
-        sumatoria += edadAComparar;
-        i++;
     }
-    promedio = (Math.trunc(sumatoria / (i)*100))/100;
- 
-    $resultado.innerText = `El familiar de mayor edad tiene ${edadMayor} anios, el menor ${edadMenor}, y tienen un promedio de ${promedio} anios.`;
-    
-    
+
+    let edadMayor = calcularMayor(edades);
+    let edadMenor = calcularMenor(edades);
+    let edadPromedio = calcularPromedio(edades);
+
+    $resultado.innerText = `El familiar de mayor edad tiene ${edadMayor} anios, el menor ${edadMenor}, y tienen un promedio de ${edadPromedio} anios.`;
+
 }
 
 $botonReiniciar.onclick = function () {
-    let i = 0;
-    while (document.getElementById(`edad-${i + 1}`) !== null) {
-        document.querySelector(`#edad-${i + 1}`).remove();
-        document.querySelector(`#label-${i + 1}`).remove();
-        document.querySelector(`#form-${i + 1}`).remove();
-        i++;
-    }
+    
+    let formulariosDinamicos = document.querySelectorAll(".formulario-dinamico");
+    
+    formulariosDinamicos.forEach(function borrar(elemento) {
+        elemento.remove();
+    });
+
     $resultado.innerText = "";
     $botonIngresar.disabled = false;
     $botonCalcular.disabled = true;
+    
 }
