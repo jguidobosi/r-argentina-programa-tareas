@@ -92,13 +92,12 @@ $botonIngresar.onclick = function () {
 
 $botonCalcular.onclick = function () {
     
-    let edades = [0];
+    let edades = [];
     let $listaDeNodosInput = document.querySelectorAll(".edad");
-    edades.length = $listaDeNodosInput.length;
 
     for (i = 0; i < $listaDeNodosInput.length; i++) {
 
-        edades[i] = Number($listaDeNodosInput[i].value);
+        edades.push(Number($listaDeNodosInput[i].value));
 
     }
 
