@@ -147,6 +147,8 @@ function leerEntradas($salariosAnuales) {
 
                 $salariosAnuales[i].className = "error";
 
+            }else{
+                $salariosAnuales[i].className = "";
             }
 
         }
