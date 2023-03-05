@@ -1,20 +1,118 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>C8 Tarea 1 - Grupo familiar</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="..\..\node_modules\bootstrap\dist\css\bootstrap.css">
+
+    <style>
+        body {
+            background-color: white;
+        }
+
+        .centrado {
+            margin: 100;
+            padding: 100;
+        }
+
+        .oculto {
+            visibility: hidden;
+        }
+
+        .error {
+            border: 2px solid red;
+        }
+
+        .big-top-margin {
+            margin-top: 15px;
+        }
+
+        .small-top-margin {
+            margin-top: 7px;
+        }
+
+        .stick-to-bottom {
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+        }
+    </style>
+
+
+
+    <nav class="navbar navbar-dark bg-primary">
+        <span class="navbar-brand text-white h1 ">‎ ‎Calculador de Edades</span>
+    </nav>
+
 </head>
+
 <body class="centrado">
+
     <form>
-        <label>Numero de familiares:</label><input id="numero-de-familiares" type="number" placeholder="">
-        <input id="boton-ingresar"class = "botones" type=button value="Ingresar">
-        <div id="division-formulario">
+
+        <!--<div class="form-group">
+            <input id="numero-de-familiares" type="number" class="form-control" placeholder="Amount of relatives"
+                aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button id="boton-ingresar" class="btn btn-outline-secondary" type="button">Ingresar</button>
+            </div>
+        </div>-->
+
+        <!--<div class="panel panel-default">
+
+            <form>
+                <div class="form-group">
+                    <label class="h5">Amount of Relatives:</label>
+                    <input id="numero-de-familiares" type="number" class="form-control"
+                        aria-label="Recipient's username">
+                </div>
+                <button id="boton-ingresar" class="btn btn-outline-secondary" type="button">Ingresar</button>
+            </form>
+
+        </div>-->
+
+
+        <div class="container-sm bg-light big-top-margin">
+            <form>
+                <div class="form-group">
+
+                    <label class="h5">Cantidad de Familiares:</label>
+                    <input id="numero-de-familiares" type="number" class="form-control"
+                        aria-label="Recipient's username">
+                </div>
+                <div id="mensaje-error-cantidad" class="invalid-feedback d-block">
+
+                </div>
+
+                <button id="boton-ingresar" class="btn btn-outline-secondary small-top-margin"
+                    type="button">Ingresar</button>
+            </form>
+
+            <form>
+                <div id="division-formulario" class="form-group"></div>
+
+                <div id="mensaje-error-edades" class="invalid-feedback d-block"></div>
+
+                <div id=resultado class="alert alert-primary oculto" role="alert"></div>
+
+                <input id="boton-reiniciar" type=reset class="oculto btn btn-outline-secondary" value="Borrar">
+
+                <input id="boton-calcular" type=button class="oculto btn btn-outline-secondary" value="Calcular">
+
+
+            </form>
         </div>
-        <div id = resultado></div>
-        <input id="boton-reiniciar" type=reset class ="oculto" value="Borrar">
-        <input id="boton-calcular" type=button class ="oculto" value="Calcular">
-    </form>
-    <script src='tarea-clase-8-1.js'></script>
-    <script src='pruebas.js'></script>
+
+
+        <footer class="footer">
+            <p class="p-4  stick-to-bottom">r-argentina-programa</p>
+        </footer>
+
+        <script src='tarea-clase-8-1.js'></script>
+        <script src='pruebas.js'></script>
+
 </body>
+
 </html>

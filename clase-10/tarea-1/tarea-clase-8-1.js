@@ -11,6 +11,9 @@ let $botonReiniciar = document.querySelector("#boton-reiniciar");
 let $numeroDeFamiliares = document.querySelector("#numero-de-familiares");
 let $formularioGeneral = document.querySelector("#division-formulario");
 let $resultado = document.querySelector("#resultado");
+let $errorCantidad = document.querySelector("#mensaje-error-cantidad");
+let $errorEdades = document.querySelector("#mensaje-error-edades");
+const ENIE = "\u00F1";
 const MAXIMO_EDAD = 150;
 const MAXIMO_FAMILIARES = 25;
 
@@ -75,52 +78,54 @@ function validarNumeroDeFamiliares(numeroDeFamiliares) {
     return "";
 }
 
-function crearEntradas(numeroDeFamiliares){
+function crearEntradas(numeroDeFamiliares) {
+
+    let $seccionConFormularios = document.createElement("div");
 
     for (let i = 0; i < numeroDeFamiliares; i++) {
 
-        let $nuevoForm = document.createElement("form");
-        let $nuevoLabel = document.createElement("label");
         let $nuevoInput = document.createElement("input");
 
-        $nuevoLabel.innerText = `Edad familiar ${i + 1}:`;
-        $nuevoForm.className = `formulario-dinamico`;
-
+        $nuevoInput.placeholder = `Edad familiar ${i + 1}:`;
         $nuevoInput.type = `number`;
         $nuevoInput.id = "edad";
+        $nuevoInput.classList.add("small-top-marign");
+        $nuevoInput.classList.add("form-control");
+        
 
+        $seccionConFormularios.className = `formulario-dinamico`;
 
-        $nuevoForm.appendChild($nuevoLabel);
-        $nuevoForm.appendChild($nuevoInput);
-        $formularioGeneral.appendChild($nuevoForm);
+        $seccionConFormularios.appendChild($nuevoInput);
 
-        }
+    }
+
+    $formularioGeneral.appendChild($seccionConFormularios);
 
 }
 
-function leerEntradas($listaDeNodosInput){
+function leerEntradas($listaDeNodosInput) {
 
     let edadesNumeros = [];
     let edadesStrings = [];
 
     for (i = 0; i < $listaDeNodosInput.length; i++) {
-        
+
         let stringEdad = $listaDeNodosInput[i].value;
 
         let edad = Number(stringEdad);
-        
+
         if (stringEdad !== "") {
 
             edadesStrings.push(stringEdad);
             edadesNumeros.push(edad);
 
-            if(edad >= MAXIMO_EDAD  || !/^[0-9]+$/.test(stringEdad)){
-                
-                $listaDeNodosInput[i].className = "error";
+            if (edad >= MAXIMO_EDAD || !/^[0-9]+$/.test(stringEdad)) {
+
+                $listaDeNodosInput[i].className = "form-control is-invalid";
 
             } else {
 
-                $listaDeNodosInput[i].className = "";
+                $listaDeNodosInput[i].className = "form-control";
 
             }
         }
@@ -128,8 +133,8 @@ function leerEntradas($listaDeNodosInput){
 
     let edades = {
 
-        strings : edadesStrings,
-        numeros : edadesNumeros
+        strings: edadesStrings,
+        numeros: edadesNumeros
     }
 
     return edades;
@@ -164,9 +169,10 @@ function validarEdades(edades) {
     return "";
 }
 
-function escribir(texto){
+function escribir(texto) {
 
-    if (texto === ""){
+    $resultado.classList.remove("oculto");
+    if (texto === "") {
 
         document.querySelector("#texto-resultado").remove();
         return;
@@ -180,7 +186,7 @@ function escribir(texto){
 
         let $nuevoStrong = document.createElement("strong");
 
-        $nuevoStrong.innerText = texto;    
+        $nuevoStrong.innerText = texto;
         $nuevoStrong.id = "texto-resultado"
         $resultado.appendChild($nuevoStrong);
     }
@@ -193,23 +199,24 @@ $botonIngresar.onclick = function () {
     let numeroDeFamiliares = $numeroDeFamiliares.value;
 
     let errorValidacionFamiliares = validarNumeroDeFamiliares(numeroDeFamiliares);
-    
+
     if (errorValidacionFamiliares) {
-    
-        escribir(errorValidacionFamiliares);
-        $numeroDeFamiliares.className = "error";
+
+        $errorCantidad.textContent = errorValidacionFamiliares;
+        $numeroDeFamiliares.className = "form-control is-invalid";
 
     } else {
 
-        $numeroDeFamiliares.className = "";
+        $errorCantidad.textContent = "";
+        $numeroDeFamiliares.className = "form-control";
 
         crearEntradas(numeroDeFamiliares);
 
-        $botonIngresar.className = "oculto";
+        $botonIngresar.classList.add("oculto");
         $numeroDeFamiliares.disabled = true;
-        $botonCalcular.className = "botones";
-        $botonReiniciar.className = "botones";
-        
+        $botonCalcular.classList.remove("oculto");
+        $botonReiniciar.classList.remove("oculto");
+
     }
 
 }
@@ -220,29 +227,33 @@ $botonCalcular.onclick = function () {
     let $listaNodosInput = document.querySelectorAll("#edad");
 
     let edades = leerEntradas($listaNodosInput);
-    
+
     let = error = validarEdades(edades.strings);
 
-    if (error){
-        
-            escribir(error);
-    
-    }else{
+    if (error) {
 
+        $errorEdades.textContent = error;
+
+    } else {
+
+        $errorEdades.textContent = "";
 
         let edadMayor = calcularMayor(edades.numeros);
         let edadMenor = calcularMenor(edades.numeros);
         let edadPromedio = calcularPromedio(edades.numeros);
 
-        let textoResultadoExitoso = `El familiar de mayor edad tiene ${edadMayor} anios, el menor ${edadMenor}, y tienen un promedio de ${edadPromedio} anios.`;
-        
+        let textoResultadoExitoso = `El familiar de mayor edad tiene ${edadMayor} a${ENIE}os, el menor ${edadMenor}, y tienen un promedio de ${edadPromedio} a${ENIE}os.`;
+
         escribir(textoResultadoExitoso);
 
     }
-    
+
 }
 
 $botonReiniciar.onclick = function () {
+    
+    $errorEdades.textContent = "";
+    $errorCantidad.textContent = "";
 
     let formulariosDinamicos = document.querySelectorAll(".formulario-dinamico");
 
@@ -252,11 +263,13 @@ $botonReiniciar.onclick = function () {
 
     });
 
-    $botonIngresar.className = "botones";
+    $botonIngresar.classList.remove("oculto");
     $numeroDeFamiliares.disabled = false;
-    $botonCalcular.className = "oculto";
-    $botonReiniciar.className = "oculto";
-
-   escribir ("");
+    $numeroDeFamiliares.value = "";
+    $botonCalcular.classList.add("oculto");
+    $botonReiniciar.classList.add("oculto");
     
+    escribir("");
+    $resultado.classList.add("oculto");
+
 }
