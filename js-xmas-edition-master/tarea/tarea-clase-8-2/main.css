@@ -1,0 +1,49 @@
+head,
+body {
+
+  font-size: 16px;
+  font-family:Arial;
+  font-weight:600;
+  text-align: center;
+  background-color: beige;
+
+}
+
+.oculto {
+
+  visibility: hidden;
+
+}
+
+.error {
+  border: 2px solid red;
+}
+
+.boton {
+
+  background-color: brown;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family:Arial;
+  font-weight:600;
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+
+}
+
+input,
+label,
+strong {
+
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+
+
+}
