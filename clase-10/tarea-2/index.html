@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>C8 Tarea 2 - Salario grupo familiar</title>
-    <h1>Calculador de Salarios familiares</h1>
+
+    <link rel="stylesheet" href="..\..\node_modules\bootstrap\dist\css\bootstrap.css">
+
     <link rel="stylesheet" href="main.css">
+
+    <title>C8 Tarea 2 - Salario grupo familiar</title>
+
+    <nav class="navbar navbar-dark bg-primary">
+
+        <span class="navbar-brand text-white h1 ">‎ ‎Calculador de Salarios Familiares</span>
+
+    </nav>
+
 </head>
-<body>
-    <div id="division-formulario">
+
+<body class="centered">
+    <div class="container-sm bg-light big-top-margin">
+        <div id="division-formulario"></div>
+
+        <section id="mensaje-sistema">
+            <div id="resultado" class="alert alert-primary big-top-margin" role="alert"></div>
+            <div id="mensaje-error" class="alert alert-danger big-top-margin" role="alert"></div>
+        </section>
+        <form>
+            <div>‎ ‎</div>
+
+            <div><input id="agregar" type="button"
+                    class="btn btn-outline-secondary small-top-margin me-1" value="Agregar Familiar">
+
+                <input id="quitar" type="button"
+                    class="btn btn-outline-secondary small-top-margin oculto me-1"
+                    value="Quitar Familiar">
+
+            </div>
+            <div>‎ ‎</div>
+            <div><input id="calcular" type="button"
+                    class="btn btn-outline-secondary small-top-margin oculto me-1 " value="Calcular">
+            </div>
+
+        </form>
     </div>
-    <form>
-        <div><input id ="agregar" type="button" class="boton" value="Agregar"></div>
-        <input id ="quitar" type="button" class="oculto" value="Quitar">
-        <input id ="calcular" type="button" class="oculto" value="Calcular">
-    </form>
-    <strong id="resultado"></strong>
     <script src='tarea-clase-8-2.js'></script>
     <script src='pruebas.js'></script>
+    </div>
 </body>
+
 </html>

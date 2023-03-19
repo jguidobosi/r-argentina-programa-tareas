@@ -19,11 +19,48 @@ let $botonCalcular = document.querySelector("#calcular");
 let $formularioGeneral = document.querySelector("#division-formulario");
 let $botones = document.querySelector("#botones");
 let $resultado = document.querySelector("#resultado");
+let $error = document.querySelector("#mensaje-error");
+let $mensajeSistema = document.querySelector("#mensaje-sistema");
 const SALARIO_MAXIMO = 10000000;
+let resultadoEnPantalla = true;
+let errorEnPantalla = true;
+
+
+
+function manejarResultado(accion) {
+
+    if (accion && !resultadoEnPantalla) {
+
+        $mensajeSistema.appendChild($resultado);
+        resultadoEnPantalla = true;
+
+    } else if (!accion && resultadoEnPantalla) {
+
+        $mensajeSistema.removeChild($resultado);
+        resultadoEnPantalla = false;
+
+    }
+
+}
+
+function manejarError(accion) {
+
+    if (accion && !errorEnPantalla) {
+
+        $mensajeSistema.appendChild($error);
+        errorEnPantalla = true;
+
+    } else if (!accion && errorEnPantalla) {
+
+        $mensajeSistema.removeChild($error);
+        errorEnPantalla = false;
+    }
+
+}
 
 function calcularMenor(numeros) {
 
-    let menor = Number (numeros[0]);
+    let menor = Number(numeros[0]);
 
     for (let i = 1; i < numeros.length; i++) {
 
@@ -70,7 +107,7 @@ function calcularPromedio(numeros) {
 
     promedio = sumatoria / numeros.length;
 
-    return promedio;
+    return (Math.trunc(promedio * 100)) / 100; //solo dos decimales
 }
 
 function validarSalarios(salariosStrings) {
@@ -106,7 +143,7 @@ function validarSalarios(salariosStrings) {
         return `Ingrese un valor menor a ${SALARIO_MAXIMO}`;
     }
 
-    if (banderaDecimal){
+    if (banderaDecimal) {
         return "No utilice puntos ni comas (redondear centavos a cantidad entera)";
     }
 
@@ -121,9 +158,13 @@ function crearEntrada() {
     let $nuevoInput = document.createElement("input");
     $nuevoInput.id = "salario-anual";
     $nuevoInput.type = `number`;
+    $nuevoInput.className = "form-control";
+    $nuevoInput.placeholder = "Salario en $ARS";
+
 
     let $nuevoLabel = document.createElement("label");
     $nuevoLabel.innerText = `Salario anual de familiar ${document.querySelectorAll("#formulario-dinamico").length + 1}:`;
+    $nuevoLabel.className = "h6";
 
     $nuevoFormulario.appendChild($nuevoLabel);
     $nuevoFormulario.appendChild($nuevoInput);
@@ -136,19 +177,19 @@ function leerEntradas($salariosAnuales) {
     let salariosStrings = [];
 
     for (let i = 0; i < $salariosAnuales.length; i++) {
-        
+
         let salario = $salariosAnuales[i].value;
-       
+
         if (salario !== "") {
 
             salariosStrings.push(salario);
 
-            if (Number(salario) >= SALARIO_MAXIMO || !/^[0-9]+$/.test(salariosStrings[i]) ){
+            if (Number(salario) >= SALARIO_MAXIMO || !/^[0-9]+$/.test(salariosStrings[i])) {
 
-                $salariosAnuales[i].className = "error";
+                $salariosAnuales[i].classList.add("error");
 
-            }else{
-                $salariosAnuales[i].className = "";
+            } else {
+                $salariosAnuales[i].classList.remove("error");
             }
 
         }
@@ -164,10 +205,14 @@ $botonAgregar.onclick = function () {
 
     if (document.querySelectorAll(`.formulario-dinamico`).length === 0) {
 
-        $botonQuitar.className = "boton";
-        $botonCalcular.className = "boton";
+        $botonQuitar.classList.remove("oculto");
+        $botonCalcular.classList.remove("oculto");
 
     }
+
+    manejarError(false);
+    manejarResultado(false);
+
 
     crearEntrada();
 
@@ -179,16 +224,16 @@ $botonQuitar.onclick = function () {
 
     if ($nuevosFormularios.length === 1) {
 
-        $botonQuitar.className = "oculto";
-        $botonCalcular.className = "oculto";
-
-        $resultado.textContent = "";
+        $botonQuitar.classList.add("oculto");
+        $botonCalcular.classList.add("oculto");
 
     };
-    
-   $resultado.textContent = "";
 
-   $nuevosFormularios[$nuevosFormularios.length - 1].remove();
+    manejarError(false);
+    manejarResultado(false);
+
+
+    $nuevosFormularios[$nuevosFormularios.length - 1].remove();
 
 
 }
@@ -197,14 +242,17 @@ $botonCalcular.onclick = function () {
 
 
     let $salariosAnuales = document.querySelectorAll("#salario-anual");
-    
+
     let salarios = leerEntradas($salariosAnuales);
 
     let error = validarSalarios(salarios);
 
     if (error) {
 
-        $resultado.textContent = error;
+        $error.textContent = error;
+
+        manejarError(true);
+        manejarResultado(false);
 
     } else {
 
@@ -215,7 +263,12 @@ $botonCalcular.onclick = function () {
 
         $resultado.textContent = `El menor salario es de $${menorSalario}, el mayor de $${mayorSalario}, el promedio anual es $${promedioAnual}, y el mensual de $${promedioMensual}.`;
 
+        manejarError(false);
+        manejarResultado(true);
+
     }
 
 }
 
+manejarError(false);
+manejarResultado(false);
